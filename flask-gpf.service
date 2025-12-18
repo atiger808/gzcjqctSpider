@@ -1,0 +1,19 @@
+[Unit]
+Description=Gunicorn for flask-gpf
+After=network.target
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/www/home/gzcjqctSpider
+Environment="SECRET_KEY=XXX" "LOGIN_ACCOUNT=yyy" "PASSWORD=zzz"
+ExecStart=/root/anaconda3/envs/gpfspider/bin/gunicorn --bind 0.0.0.0:5000 --workers 3 --timeout 120 app:app
+Restart=on-failure
+RestartSec=10
+
+# 日志重定向（备用）
+StandardOutput=append:/var/log/spider.log
+StandardError=append:/var/log/spider.log
+
+[Install]
+WantedBy=multi-user.target
